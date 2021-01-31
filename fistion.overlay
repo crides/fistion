@@ -1,0 +1,60 @@
+/*
+ * Copyright (c) 2020 Pete Johanson
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+/ {
+	chosen {
+		zmk,kscan = &kscan0;
+	};
+
+	kscan0: kscan {
+		compatible = "zmk,kscan-gpio-direct";
+
+		label = "KSCAN";
+		input-gpios
+			// R1 C1-C5
+			= <&gpio1 13 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio1 15 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio0 29 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio0 31 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio1 4 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+
+			// R2 C1-C5
+			, <&gpio0 10 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio0 9 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio0 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio1 1 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio0 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+
+			// R3 C1-C4
+			, <&gpio1 7 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>	// Thumb
+			, <&gpio1 2 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			, <&gpio1 11 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>  // Lower middle
+			, <&gpio1 6 (GPIO_ACTIVE_LOW | GPIO_PULL_UP)>
+			;
+	};
+};
+
+&i2c1 {
+	compatible = "nordic,nrf-twi";
+	sda-pin = <6>;
+	scl-pin = <8>;
+
+	oled: ssd1306@3c {
+		compatible = "solomon,ssd1306fb";
+		reg = <0x3c>;
+		label = "DISPLAY";
+		width = <128>;
+		height = <32>;
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <31>;
+		segment-remap;
+		com-invdir;
+		com-sequential;
+		prechargep = <0x22>;
+	};
+};
