@@ -38,6 +38,7 @@
 };
 
 &i2c1 {
+	status = "okay";
 	compatible = "nordic,nrf-twi";
 	sda-pin = <6>;
 	scl-pin = <8>;
@@ -52,9 +53,6 @@
 		page-offset = <0>;
 		display-offset = <0>;
 		multiplex-ratio = <31>;
-		segment-remap;
-		com-invdir;
-		com-sequential;
 		prechargep = <0x22>;
 	};
 };
